@@ -2,48 +2,22 @@
 #include "stdio.h"
 #include "string.h"
 
-int inputArray[] = {6, 4, 3, 11, 10};
 
-void swichPosition(int *a, int *b)
-{
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
 
-void bubbleSort(/*int inputArray[], */ int n)
+int factorial(int n)
 {
-    for(int i = 0; i < n-1; i++)
+    if(n==0)
     {
-        for(int j = 0; j < n-i-1; j++)
-        {
-            if(inputArray[j] > inputArray[j+1])
-            {
-                 swichPosition(&inputArray[j], &inputArray[j+1]);
-            }
-        }
+        return 1;
     }
+    return (n * factorial(n-1));
 }
-
-void printArray()
-{
-    for(int i = 0; i < sizeof(inputArray); i++)
-    {
-        printf(" %d, ", inputArray[i]);
-    }
-    printf(" ------- \n");
-}
-
 
 int main(int argc, char const *argv[])
 {
-    printArray();
+    int result = factorial(5);
+    printf("Factorial of 5 is: %d\n", result);
 
-    int n = sizeof(inputArray)/2;
-
-    bubbleSort(n);
-    printArray();
 
     return 0;
 }
-
