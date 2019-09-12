@@ -2,6 +2,8 @@
 #include "stdio.h"
 #include "string.h"
 
+int inputArray[] = {6, 4, 3, 11, 10};
+
 void swichPosition(int *a, int *b)
 {
     int temp = *a;
@@ -9,7 +11,7 @@ void swichPosition(int *a, int *b)
     *b = temp;
 }
 
-void bubbleSort(int inputArray[], int n)
+void bubbleSort(/*int inputArray[], */ int n)
 {
     for(int i = 0; i < n-1; i++)
     {
@@ -17,23 +19,31 @@ void bubbleSort(int inputArray[], int n)
         {
             if(inputArray[j] > inputArray[j+1])
             {
-                 swichPosition(&inputArray[j], &inputArray[j+1]]);
+                 swichPosition(&inputArray[j], &inputArray[j+1]);
             }
         }
     }
 }
 
+void printArray()
+{
+    for(int i = 0; i < sizeof(inputArray); i++)
+    {
+        printf(" %d, ", inputArray[i]);
+    }
+    printf(" ------- \n");
+}
+
+
 int main(int argc, char const *argv[])
 {
-    enQueue(10);
-    enQueue(2);
-    enQueue(4);
-    enQueue(5);
-    enQueue(7);
-    deQueue();
-    deQueue();
-    enQueue(3);
-    enQueue(2);
+    printArray();
+
+    int n = sizeof(inputArray)/2;
+
+    bubbleSort(n);
+    printArray();
+
     return 0;
 }
 
