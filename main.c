@@ -2,64 +2,89 @@
 #include "stdio.h"
 #include "string.h"
 
-char s[] = "GeeksforGeeks";
+int dataArray[] = {
+    3,	94,	86,	82,	90,
+10,	87,	36,	61,	8,
+17,	15,	22,	10,	23,
+78,	25,	2,	30,	45,
+98,	43,	98,	59,	53,
+57,	2,	64,	1,	41,
+32,	58,	19,	99,	60,
+74,	48,	80,	44,	25,
+68,	1,	89,	77,	60,
+25,	99,	30,	76,	32,
+57,	82,	52,	44,	72,
+87,	34,	87,	65,	30,
+54,	6,	31,	33,	44,
+44,	42,	82,	90,	17,
+9,	98,	28,	86,	69,
+3,	17,	8,	45,	98,
+12,	47,	95,	43,	72,
+39,	41,	82,	74,	56,
+65,	79,	50,	26,	67,
+100,24,	67,	38,	57
+};
 
-int factorial(int n)
+int merge_m(int dataArray[], int a, int half, int b)
 {
-    if (n == 0)
+    int temp1[100];
+    int temp2[100];
+
+    int i, j, k;
+    int n1 = half - a + 1;
+    int n2 = b - half;
+
+    for (i = 0; i < n1; i++)
     {
-        return 1;
+        temp1[i] = dataArray[a + i];
     }
-    return (n * factorial(n - 1));
+    for (j = 0; j < n2; j++)
+    {
+        temp2[j] = dataArray[half + j + 1];
+    }
+    temp1[i] = 9999;
+    temp2[j] = 9999;
+
+    i = 0;
+    j = 0;
+
+    for (k = a; k <= b; k++)
+    {
+        if (temp1[i] <= temp2[j])
+        {
+            dataArray[k] = temp1[i++];
+        }
+        else
+        {
+            dataArray[k] = temp2[j++];
+        }
+    }
+    return 0;
 }
 
-int factorialNonRecursion(int n)
+int merge_sort_g(int dataArray[], int a, int b)
 {
-    int result = 1;
-    for (int i = n; i > 1; i -= 2)
+    int half;
+    if (a < b)
     {
-
-        result = result * i * (i - 1);
+        half = (a + b) / 2;
+        merge_sort_g(dataArray, a, half);
+        merge_sort_g(dataArray, half + 1, b);
+        merge_m(dataArray, a, half, b);
     }
-    return result;
-}
-
-void reverseFunction()
-{
-    int n = sizeof(s);
-
-    printf("String len %d\n", n);
-}
-void reverse(char *stringToreverse, int a, int b)
-{
-    char temporal;
-
-    if (a >= b)
-    {
-        return;
-    }
-    temporal = stringToreverse[a];
-    stringToreverse[a] = stringToreverse[b];
-    stringToreverse[b] = temporal;
-
-    reverse(stringToreverse, ++a, --b);
+    return 0;
 }
 
 int main(int argc, char const *argv[])
 {
-    int n = 6;
-    int result = factorial(n);
-    printf("Factorial of %d is: %d\n", n, result);
 
-    int result2 = factorialNonRecursion(n);
-    printf("Factorial non recursive of %d is: %d\n", n, result2);
+    int n = (sizeof(dataArray)/sizeof(dataArray[0])) - 1;
+    merge_sort_g(dataArray, 0, n);
 
-    char myString[] = {"1234"};
-    printf("Before the reverse %s\n", myString);
-
-    reverse(myString, 0, strlen(myString) - 1);
-
-    printf("After the reverse %s\n", myString);
-
+    printf("The array is: %d \n", n);
+    for (int i = 0; i < n+1; i++)
+    {
+        printf("%d\n", dataArray[i]);
+    }
     return 0;
 }
