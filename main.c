@@ -4,82 +4,69 @@
 
 int dataArray[] = {
     3,	94,	86,	82,	90,
-10,	87,	36,	61,	8,
-17,	15,	22,	10,	23,
-78,	25,	2,	30,	45,
-98,	43,	98,	59,	53,
-57,	2,	64,	1,	41,
-32,	58,	19,	99,	60,
-74,	48,	80,	44,	25,
-68,	1,	89,	77,	60,
-25,	99,	30,	76,	32,
-57,	82,	52,	44,	72,
-87,	34,	87,	65,	30,
-54,	6,	31,	33,	44,
-44,	42,	82,	90,	17,
-9,	98,	28,	86,	69,
-3,	17,	8,	45,	98,
-12,	47,	95,	43,	72,
-39,	41,	82,	74,	56,
-65,	79,	50,	26,	67,
-100,24,	67,	38,	57
+    10,	87,	36,	61,	8,
+    7,	15,	22,	10,	23,
+    78,	25,	2,	30,	45,
+    98,	43,	98,	59,	53,
+    57,	2,	64,	1,	41,
+    32,	58,	19,	99,	60,
+    74,	48,	80,	44,	25,
+    68,	1,	89,	77,	60,
+    25,	99,	30,	76,	32,
+    7,	82,	52,	44,	72,
+    87,	34,	87,	65,	30,
+    54,	6,	31,	33,	44,
+    44,	42,	82,	90,	17,
+    9,	98,	28,	86,	69,
+    3,	17,	8,	45,	98,
+    12,	47,	95,	43,	72,
+    9,	41,	82,	74,	56,
+    65,	79,	50,	26,	67,
+    100,24,	67,	38,	57
 };
 
-int merge_m(int dataArray[], int a, int half, int b)
+int divide(int data[], int a, int b)
 {
-    int temp1[100];
-    int temp2[100];
+    int i = (a-1);
+    int pivot = data[b];
+    int temporalValue;
 
-    int i, j, k;
-    int n1 = half - a + 1;
-    int n2 = b - half;
-
-    for (i = 0; i < n1; i++)
+    for(int j= a; j<b; j++)
     {
-        temp1[i] = dataArray[a + i];
-    }
-    for (j = 0; j < n2; j++)
-    {
-        temp2[j] = dataArray[half + j + 1];
-    }
-    temp1[i] = 9999;
-    temp2[j] = 9999;
-
-    i = 0;
-    j = 0;
-
-    for (k = a; k <= b; k++)
-    {
-        if (temp1[i] <= temp2[j])
+        if(data[j] <= pivot)
         {
-            dataArray[k] = temp1[i++];
-        }
-        else
-        {
-            dataArray[k] = temp2[j++];
+            i++;
+            temporalValue = data[i];
+            data[i] = data[j];
+            data[j] = temporalValue;
+
         }
     }
-    return 0;
+    temporalValue = data[i+1];
+    data[i+1] = data[b];
+    data[b] = temporalValue;
+    return (i+1);
 }
 
-int merge_sort_g(int dataArray[], int a, int b)
+void quick_sort(int data[], int a, int b)
 {
-    int half;
-    if (a < b)
+
+    //printf("a: %d, b: %d ,index: %d\n", a,b,1);
+    if(a < b)
     {
-        half = (a + b) / 2;
-        merge_sort_g(dataArray, a, half);
-        merge_sort_g(dataArray, half + 1, b);
-        merge_m(dataArray, a, half, b);
+        int index = divide(data, a, b);
+        //printf("a: %d, b: %d ,index: %d\n", a,b, index);
+        quick_sort(data, a, index-1);
+        quick_sort(data, index+1, b);
     }
-    return 0;
+
 }
 
 int main(int argc, char const *argv[])
 {
-
-    int n = (sizeof(dataArray)/sizeof(dataArray[0])) - 1;
-    merge_sort_g(dataArray, 0, n);
+    int n = ((sizeof(dataArray)/sizeof(dataArray[0])) ) - 1;
+    printf("N: %d \n", n);
+    quick_sort(dataArray, 0, n);
 
     printf("The array is: %d \n", n);
     for (int i = 0; i < n+1; i++)
